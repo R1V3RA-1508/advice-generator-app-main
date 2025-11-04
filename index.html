@@ -16,9 +16,10 @@
 </head>
 <body onload=generate()>
     <div class="container">
-      <h1 id='adviceid'>Advice #<!-- Advice ID goes here --></h1>
-      <p id='advice'><!-- Advice text goes here -->"Работа не волк, работа ворк. Волк это ходить."</p>
+      <h1 id='adviceid'>Advice #117<!-- Advice ID goes here --></h1>
+      <p id='advice'>"It is easy to sit up and take notice, what's difficult is getting up and taking action."</p>
       <img src='./images/pattern-divider-mobile.svg' id='md'>
+      <img src="./images/pattern-divider-desktop.svg" id='dd'>
       <button onclick=generate()><img src="./images/icon-dice.svg" alt="generate"></button>
     </div>
     
@@ -27,13 +28,8 @@
       const advice = document.getElementById('advice');
       const adviceid = document.getElementById('adviceid');
 
-      function setText(data){
-        advice.innerHTML = data.slip.advice; 
-        adviceid.innerHTML = 'Advice #' + data.slip.id;
-      }
-
-      function generate(){
-        fetch(apiurl + Math.random()*100)
+      function generate(id = Math.random()*100){
+        fetch(apiurl + id)
         .then(response => {
           if (!response.ok) {
             throw new Error('Network issue bruh');
@@ -43,6 +39,11 @@
         .then(data => {setText(data)})
         .catch(error => {console.error('Error:', error)});
       }
+
+      function setText(data){
+        advice.innerHTML = '"' + data.slip.advice + '"'; 
+        adviceid.innerHTML = 'Advice #' + data.slip.id;
+      } 
     </script>
   <!--<div class="attribution">
     Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
