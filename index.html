@@ -35,9 +35,13 @@
       function generate(){
         fetch(apiurl + Math.random()*100)
         .then(response => {
+          if (!response.ok) {
+            throw new Error('Network issue bruh');
+          }
           return response.json()
         })
-        .then(data => {setText(data)});
+        .then(data => {setText(data)})
+        .catch(error => {console.error('Error:', error)});
       }
     </script>
   <!--<div class="attribution">
