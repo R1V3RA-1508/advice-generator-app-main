@@ -14,14 +14,32 @@
     .attribution a { color: hsl(228, 45%, 44%); }
   </style>
 </head>
-<body>
+<body onload=generate()>
     <div class="container">
-      <h1>Advice #<!-- Advice ID goes here --></h1>
-      <p><!-- Advice text goes here -->"Работа не волк, работа ворк. Волк это ходить."</p>
+      <h1 id='adviceid'>Advice #<!-- Advice ID goes here --></h1>
+      <p id='advice'><!-- Advice text goes here -->"Работа не волк, работа ворк. Волк это ходить."</p>
       <img src='./images/pattern-divider-mobile.svg' id='md'>
-      <button><img src="./images/icon-dice.svg" alt="generate"></button>
+      <button onclick=generate()><img src="./images/icon-dice.svg" alt="generate"></button>
     </div>
-  
+    
+    <script>
+      const apiurl = 'https://api.adviceslip.com/advice/';
+      const advice = document.getElementById('advice');
+      const adviceid = document.getElementById('adviceid');
+
+      function setText(data){
+        advice.innerHTML = data.slip.advice; 
+        adviceid.innerHTML = 'Advice #' + data.slip.id;
+      }
+
+      function generate(){
+        fetch(apiurl + Math.random()*100)
+        .then(response => {
+          return response.json()
+        })
+        .then(data => {setText(data)});
+      }
+    </script>
   <!--<div class="attribution">
     Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
     Coded by <a href="#">Your Name Here</a>.
